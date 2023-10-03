@@ -1,0 +1,6 @@
+pynvim
+openai
+tiktoken
+requests
+markdownify
+bs4
