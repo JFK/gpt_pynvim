@@ -107,7 +107,7 @@ def display_please_wait_message(window_name: str, buffer_content: str):
         + "Thank you for your patience.\n"
         + "\n"
         + "[Buffer content]\n"
-        + f"```\n{buffer_content}\n```"
+        + f"\n{buffer_content}\n"
     )
     unsafe_update_window_buffer(window_name, message, "w")
 
@@ -165,8 +165,6 @@ def vim_chat_selected_lines(window_name: str):
         vim.command('echo "Error: Empty message."')
         return
     unsafe_update_window_buffer(window_name, f"```\n{selected_lines}\n```", "w")
-    vim.command("normal gg")
-    vim.command("startinsert")
 
 
 def vim_chat(window_name: str):
@@ -228,3 +226,10 @@ def vim_code_review(window_name: str):
         ),
     )
     thread.start()
+
+
+def vim_set_prompt_template(window_name: str, prompt_template):
+    if not prompt_template:
+        vim.command('echo "Error: Empty prompt template."')
+        return
+    unsafe_update_window_buffer(window_name, f"{prompt_template}", "w")
