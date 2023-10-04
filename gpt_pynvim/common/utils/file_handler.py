@@ -1,7 +1,7 @@
 import os
 import json
 import datetime
-from .env import (
+from ..config import (
     CONTEXT_FILE_PATH,
     PROMPT_FILE_PATH
 )

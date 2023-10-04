@@ -39,13 +39,13 @@ from os.path import normpath, join
 plugin_root_dir = vim.eval('s:plugin_root_dir')
 plugin_path = normpath(join(plugin_root_dir, '../'))
 sys.path.insert(0, plugin_path)
-from gpt_pynvim.env import (
+from gpt_pynvim.common.config import (
     GPT_NVIM_CHAT_WINDOW,
     GPT_NVIM_CHAT_HISTORY_WINDOW,
     GPT_NVIM_CHAT_PROMPT_LOG_WINDOW,
     GPT_NVIM_CHAT_SUMMARIZE_URLS_WINDOW,
 )
-from gpt_pynvim.main import (
+from gpt_pynvim import (
     vim_code_review,
     vim_chat,
     vim_chat_translate_to,
@@ -55,7 +55,9 @@ from gpt_pynvim.main import (
     vim_summarize_urls,
     vim_check_prompt_log,
     vim_clear_prompt_log,
+    print_config,
 )
+print_config()
 EOF
 
 function! g:gpt_pynvim#GptNvimCodeReview()

@@ -1,7 +1,7 @@
 import os
 import vim
 
-from .env import (
+from ..config import (
     OPEN_WINDOW_DIRECTION,
     OPEN_WINDOW_SIZE,
 )

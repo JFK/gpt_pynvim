@@ -4,8 +4,8 @@ import openai
 import tiktoken
 import vim
 
-from .errors import ChatCompletionError
-from .env import (
+from ..common.errors import ChatCompletionError
+from ..common.config import (
     OPENAI_API_MODEL_NAME,
     ALLOWED_MODELS,
     MODEL_NAME_FOR_LONG_MESSAGES,

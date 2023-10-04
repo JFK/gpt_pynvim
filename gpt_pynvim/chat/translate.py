@@ -1,6 +1,6 @@
-from .chat_completion import ChatCompletion
-from .errors import TranslateError
-from .env import LANGUAGE, TRANSLATE_USER_MESSAGE
+from .completion import ChatCompletion
+from ..common.errors import TranslateError
+from ..common.config import LANGUAGE, TRANSLATE_USER_MESSAGE
 
 
 class Translate(ChatCompletion):

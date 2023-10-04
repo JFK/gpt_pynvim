@@ -1,4 +1,4 @@
-from .env import LANGUAGE
+from ..common.config import LANGUAGE
 
 
 def code_review_messages(code: str, prior_conversation: list[dict[str, str]] = None) -> list[dict[str, str]]:

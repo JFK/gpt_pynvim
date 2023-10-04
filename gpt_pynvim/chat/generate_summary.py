@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 from markdownify import markdownify as md
 import requests
 
-from .chat_completion import ChatCompletion
-from .errors import GenerateSummaryError
-from .env import LANGUAGE
-from .window_buffer_handler import update_window_buffer
+from .completion import ChatCompletion
+from ..common.errors import GenerateSummaryError
+from ..common.config import LANGUAGE
+from ..common.utils.window_buffer_handler import update_window_buffer
 
 
 class GenerateSummary(ChatCompletion):

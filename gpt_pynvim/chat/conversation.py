@@ -1,19 +1,19 @@
-from .chat_completion import ChatCompletion
+from .completion import ChatCompletion
 from .code_review import code_review_messages
 from .translate import Translate
-from .errors import ConversationError
-from .env import (
+from ..common.errors import ConversationError
+from ..common.config import (
     LANGUAGE,
     MAX_TOKENS,
     PRIOR_CONVERSAION_SIZE,
     CONTEXT_HISTORY_SIZE,
 )
-from .file_handler import (
+from ..common.utils.file_handler import (
     load_context_from_file,
     save_context_to_file,
     save_prompt_to_file,
 )
-from .window_buffer_handler import update_window_buffer
+from ..common.utils.window_buffer_handler import update_window_buffer
 
 
 class Conversation(ChatCompletion):
