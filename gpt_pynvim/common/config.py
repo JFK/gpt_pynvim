@@ -20,10 +20,10 @@ OPEN_WINDOW_SIZE = os.environ.get("GNVM_GPT_OPEN_VIM_WINDOW_SIZE", None)
 TRANSLATE_USER_MESSAGE = os.environ.get("GNVM_TRANSLATE_USER_MESSAGE", 0)
 MODEL_AUTO_SELECT = os.environ.get("GNVM_MODEL_AUTO_SELECT", 1)
 CONTEXT_FILE_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "context.json"
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "context.json"
 )
 PROMPT_FILE_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "prompt.log"
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "prompt.log"
 )
 
 OPENAI_API_MODEL_NAME = os.environ.get("OPENAI_API_MODEL_NAME", "gpt-3.5-turbo")
