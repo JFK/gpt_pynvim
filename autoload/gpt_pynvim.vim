@@ -17,7 +17,7 @@ function! s:CheckPythonDependencies()
   python3 << EOF
 import pkg_resources
 def check_dependencies():
-    required_packages = {'pynvim': '0.4.3', 'openai': '0.28.0'}
+    required_packages = {'pynvim': '0.4.3', 'openai': '0.28.0', 'requests': '2.25.1', 'tiktoken': '0.5.1', 'markdownify': '0.11.6', 'bs4': '0.0.1'}
     installed_packages = {pkg.key: pkg.version for pkg in pkg_resources.working_set}
     missing_packages = {
         pkg: version for pkg, version in required_packages.items()
@@ -30,6 +30,17 @@ check_dependencies()
 EOF
 endfunction
 autocmd VimEnter * :call s:CheckPythonDependencies()
+
+
+autocmd VimEnter,BufWinEnter * call s:InitGptPynvim()
+function! s:InitGptPynvim()
+  vnoremap <buffer> . :<C-u>call g:gpt_pynvim#GptNvimCodeReview()<CR>
+  vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
+  vnoremap <buffer> <C-e> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateToEnglish()<CR>
+  vnoremap <buffer> <C-t> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateTo()<CR>
+  vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
+  nnoremap <C-Enter> :call g:gpt_pynvim#GptNvimChat()<CR>
+endfunction
 
 
 let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
@@ -60,12 +71,12 @@ from gpt_pynvim import (
 print_config()
 EOF
 
+
 function! g:gpt_pynvim#GptNvimCodeReview()
   python3 << EOF
 vim_code_review(GPT_NVIM_CHAT_WINDOW)
 EOF
 endfunction
-vnoremap <buffer> . :<C-u>call g:gpt_pynvim#GptNvimCodeReview()<CR>
 
 
 function! g:gpt_pynvim#GptNvimChat()
@@ -73,7 +84,6 @@ function! g:gpt_pynvim#GptNvimChat()
 vim_chat(GPT_NVIM_CHAT_WINDOW)
 EOF
 endfunction
-nnoremap <C-Enter> :call g:gpt_pynvim#GptNvimChat()<CR>
 
 
 function! g:gpt_pynvim#GptNvimChatTranlateToEnglish()
@@ -81,7 +91,6 @@ function! g:gpt_pynvim#GptNvimChatTranlateToEnglish()
 vim_chat_translate_to(GPT_NVIM_CHAT_WINDOW, "English")
 EOF
 endfunction
-vnoremap <buffer> <C-e> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateToEnglish()
 
 
 function! g:gpt_pynvim#GptNvimChatTranlateTo()
@@ -89,7 +98,6 @@ function! g:gpt_pynvim#GptNvimChatTranlateTo()
 vim_chat_translate_to(GPT_NVIM_CHAT_WINDOW)
 EOF
 endfunction
-vnoremap <buffer> <C-t> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateTo()
 
 
 function! g:gpt_pynvim#GptNvimChatInsertSelectedLines()
@@ -97,7 +105,6 @@ function! g:gpt_pynvim#GptNvimChatInsertSelectedLines()
 vim_chat_selected_lines(GPT_NVIM_CHAT_WINDOW)
 EOF
 endfunction
-vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()
 
 
 function! g:gpt_pynvim#GptNvimChatHistory()
