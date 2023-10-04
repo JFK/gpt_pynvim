@@ -39,12 +39,14 @@ function! s:InitGptPynvim()
   vnoremap <buffer> <C-e> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateToEnglish()<CR>
   vnoremap <buffer> <C-t> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateTo()<CR>
   vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
-  nnoremap <C-Enter> :call g:gpt_pynvim#GptNvimChat()<CR>
+  nnoremap <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChat()<CR>
+  nnoremap <C-p> :<C-u>call g:gpt_pynvim#GptNvimShowTemplateList()<CR>
 endfunction
 
 
 let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 python3 << EOF
+import vim
 import sys
 from os.path import normpath, join
 plugin_root_dir = vim.eval('s:plugin_root_dir')
@@ -66,6 +68,7 @@ from gpt_pynvim import (
     vim_summarize_urls,
     vim_check_prompt_log,
     vim_clear_prompt_log,
+    vim_set_prompt_template,
     print_config,
 )
 print_config()
@@ -162,6 +165,41 @@ function! g:gpt_pynvim#GptNvimUpdate()
   echo "gpt_nvim has been updated."
 endfunction
 command! GptNvimUpdate :call g:gpt_pynvim#GptNvimUpdate()
+
+
+let prompt_template_yaml_file ='../gpt_pynvim/prompt_template.yaml'
+python3 << EOF
+import yaml
+with open(vim.vars['prompt_template_yaml_file'], 'r') as f:
+    data = yaml.safe_load(f)
+vim.command('let g:prompt_template = ' + repr(data))
+EOF
+function! g:gpt_pynvim#GptNvimShowTemplateList()
+  let template_list = []
+  for i in range(len(g:prompt_template))
+    let dict = g:prompt_template[i]
+    let title = dict['title']
+    call add(template_list, printf('%d: %s', i + 1, title))
+  endfor
+  let selected_index = inputlist(template_list)
+  if empty(selected_index) || selected_index < 1 || selected_index > len(g:prompt_template)
+      echo "\nInvalid selection!"
+    return
+  endif
+  let selected_title = g:prompt_template[selected_index - 1]['title']
+  let selected_content = g:prompt_template[selected_index - 1]['content']
+  call GptNvimSelectTemplate(selected_title, selected_content)
+endfunction
+function! GptNvimSelectTemplate(selected_title, selected_content)
+  echo "\nselected_template: " . a:selected_title
+python3 << EOF
+selected_content = vim.eval('a:selected_content')
+selected_content = selected_content.replace('\\n', '\n')
+vim.command(f"echo '{selected_content}'")
+vim_set_prompt_template('GPT_NVIM_CHAT_WINDOW', selected_content)
+EOF
+endfunction
+command! GptNvimShowTemplates :call g:gpt_pynvim#GptNvimShowTemplateList()
 
 
 echo "\n[Usages]"
