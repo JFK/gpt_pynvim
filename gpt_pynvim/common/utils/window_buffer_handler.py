@@ -57,6 +57,7 @@ def set_common_vim_buffer_options():
         if OPEN_WINDOW_SIZE:
             vim.command(f"resize {OPEN_WINDOW_SIZE}")
 
+
 def unsafe_update_window_buffer(window_name: str, buffer_content: str, mode: str = "a"):
     if not buffer_content:
         return
@@ -76,6 +77,7 @@ def unsafe_update_window_buffer(window_name: str, buffer_content: str, mode: str
     elif mode == "a":
         vim.current.buffer.append([line for line in messages if line])
         vim.command("normal G")
+
 
 def update_window_buffer(window_name: str, buffer_content: str, mode: str = "a"):
     vim.async_call(unsafe_update_window_buffer, window_name, buffer_content, mode)
