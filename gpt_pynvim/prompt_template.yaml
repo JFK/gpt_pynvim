@@ -1,0 +1,12 @@
+- title: Make it more smart and natural
+  content: |
+    Make it more smart and natural
+    ```it
+    <Insert `it` here>
+    ```
+- title: Check the following sentence
+  content: |
+    Check the following sentence if it makes sense to you.
+    ```sentence
+    <Insert sentence here>
+    ```
