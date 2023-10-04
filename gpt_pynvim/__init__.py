@@ -60,9 +60,6 @@ def conversation_start(
     conversation.set_window_name(window_name)
     if code_review_flag:
         conversation.set_code_review_flag(True)
-    else:
-        message = "Please wait..."
-        update_window_buffer(window_name, message, "w")
     message = user_message
     mode = "w"
     loop_count = 0
