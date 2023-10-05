@@ -13,6 +13,9 @@ endif
 
 scriptencoding utf-8
 
+let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let s:parent_dir = fnamemodify(s:plugin_root_dir, ':h')
+
 function! s:CheckPythonDependencies()
   python3 << EOF
 import pkg_resources
@@ -24,13 +27,17 @@ def check_dependencies():
         if pkg not in installed_packages or installed_packages[pkg] < version
     }
     if missing_packages:
-        print(f"Missing Python packages: {missing_packages}. Please install them.")
-        vim.command("finish")
+        parent_dir = vim.eval('s:parent_dir')
+        print((
+        f"Missing Python packages: {missing_packages}. Enter to install them.\n" +
+        f"Installing Python dependencies from {parent_dir}/requirements.txt"
+        ))
+        cmd = f"pip3 install -r {parent_dir}/requirements.txt"
+        vim.eval(f"system('{cmd}')")
 check_dependencies()
 EOF
 endfunction
 autocmd VimEnter * :call s:CheckPythonDependencies()
-
 
 autocmd VimEnter,BufWinEnter * call s:InitGptPynvim()
 function! s:InitGptPynvim()
@@ -44,7 +51,6 @@ function! s:InitGptPynvim()
 endfunction
 
 
-let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 python3 << EOF
 import vim
 import sys
@@ -158,7 +164,6 @@ endfunction
 command! GptNvimSummarizeUrlsSend :call g:gpt_pynvim#GptNvimSummarizeUrlsSend()
 
 
-let s:parent_dir = fnamemodify(s:plugin_root_dir, ':h')
 function! g:gpt_pynvim#GptNvimUpdate()
   let l:update_command = "cd " . s:parent_dir . "; git pull"
   call system(l:update_command)
