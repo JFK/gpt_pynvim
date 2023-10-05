@@ -173,10 +173,17 @@ command! GptNvimUpdate :call g:gpt_pynvim#GptNvimUpdate()
 
 
 let g:prompt_template_yaml_file =s:plugin_root_dir . '/prompt_template.yaml'
+let g:own_prompt_template_yaml_file =s:parent_dir . '/prompt_template.yaml'
+
 python3 << EOF
 import yaml
-with open(vim.vars['prompt_template_yaml_file'], 'r') as f:
-    data = yaml.safe_load(f)
+import os
+prompt_template_yaml_file = vim.vars['prompt_template_yaml_file']
+own_prompt_template_yaml_file = vim.vars['own_prompt_template_yaml_file']
+if os.path.isfile(own_prompt_template_yaml_file) and os.access(own_prompt_template_yaml_file, os.R_OK):
+  prompt_template_yaml_file = own_prompt_template_yaml_file
+with open(prompt_template_yaml_file, 'r') as f:
+  data = yaml.safe_load(f)
 vim.command('let s:prompt_template = ' + repr(data))
 EOF
 function! g:gpt_pynvim#GptNvimShowTemplateList()

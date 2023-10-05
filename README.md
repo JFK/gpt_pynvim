@@ -37,14 +37,7 @@ See: https://github.com/neovim/neovim/wiki/Installing-Neovim
 
 ## Installation
 
-1. Install required Python packages:
-
-```bash
-pip install -U pip
-pip install -r requirements.txt
-```
-
-2. Install required Debian/Ubutnu package:
+1. Install required Debian/Ubutnu package:
 
 ```bash
 sudo add-apt-repository ppa:neovim-ppa/stable
@@ -52,7 +45,7 @@ sudo apt-get update
 sudo apt install neovim
 ```
 
-3. Install the plugin using git clone:
+2. Install the plugin using git clone:
 
 ```bash
 cd ~/.config/nvim/plugin/
@@ -81,15 +74,15 @@ export OPENAI_API_KEY="your_openai_api_key_here"
 | GNVM_MODEL_AUTO_SELECT         | Select gpt-3.5-turbo-16k model based on input token length  | 1 |
 
 
-
 ## Usage
 
 | Command                   | Description                                                |
 |---------------------------|------------------------------------------------------------|
 | `.` (in visual mode)      | Ask for a code review.                                     |
 | `Ctrl+Enter`                | Open CptNvimChat and GptNvimChatSend.               |
-| `Ctrl+t`                | While Visual mode, translate selected text.               |
-| `Ctrl+e`                | While Visual mode, translate selected text to English.   |
+| `Visual mode + Ctrl+t`   | While Visual mode, translate selected text.               |
+| `Visual mode + Ctrl+e`  | While Visual mode, translate selected text to English.   |
+| `Ctrl+t`               | Show selections of prompt templates.   |
 | `:GptNvimChatHistory`  | Check history of questions and answers.                    |
 | `:GptNvimChatClearHistory` | Clear history of questions and answers.                 |
 | `:GptNvimChatPromptLog`| Check prompt log.                                          |
@@ -98,6 +91,16 @@ export OPENAI_API_KEY="your_openai_api_key_here"
 | `:GptNvimSummarizeUrls` | Open the buffer for sumarize urls content.             |
 | `:GptNvimSummarizeUrlsSend` | Summarize urls content. |
 
+
+## Own prompt templates
+To set up your own prompt templates, you can create a `prompt_templates.yaml` file in the `~/.config/nvim/plugin/gpt_pynvim` directory. By customizing this file, you can personalize and configure your preferred prompt templates. It's important to note that when you add your own prompt templates, the default ones will be disabled.
+
+You just can copy `prompt_templates.yaml` from `~/.config/nvim/plugin/gpt_pynvim/autoload/prompt_templates.yaml` to `~/.config/nvim/plugin/gpt_pynvim` and edit it.
+
+```bash
+cp ~/.config/nvim/plugin/gpt_pynvim/autoload/prompt_templates.yaml ~/.config/nvim/plugin/gpt_pynvim
+nvim ~/.config/nvim/plugin/gpt_pynvim/prompt_templates.yaml
+```
 
 ## License
 
