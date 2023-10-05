@@ -158,36 +158,36 @@ endfunction
 command! GptNvimSummarizeUrlsSend :call g:gpt_pynvim#GptNvimSummarizeUrlsSend()
 
 
+let s:parent_dir = fnamemodify(s:plugin_root_dir, ':h')
 function! g:gpt_pynvim#GptNvimUpdate()
-  let l:parent_dir = fnamemodify(s:plugin_root_dir, ':h')
-  let l:update_command = "cd " . l:parent_dir . "; git pull"
+  let l:update_command = "cd " . s:parent_dir . "; git pull"
   call system(l:update_command)
   echo "gpt_nvim has been updated."
 endfunction
 command! GptNvimUpdate :call g:gpt_pynvim#GptNvimUpdate()
 
 
-let prompt_template_yaml_file ='../gpt_pynvim/prompt_template.yaml'
+let g:prompt_template_yaml_file =s:plugin_root_dir . '/prompt_template.yaml'
 python3 << EOF
 import yaml
 with open(vim.vars['prompt_template_yaml_file'], 'r') as f:
     data = yaml.safe_load(f)
-vim.command('let g:prompt_template = ' + repr(data))
+vim.command('let s:prompt_template = ' + repr(data))
 EOF
 function! g:gpt_pynvim#GptNvimShowTemplateList()
   let template_list = []
-  for i in range(len(g:prompt_template))
-    let dict = g:prompt_template[i]
+  for i in range(len(s:prompt_template))
+    let dict = s:prompt_template[i]
     let title = dict['title']
     call add(template_list, printf('%d: %s', i + 1, title))
   endfor
   let selected_index = inputlist(template_list)
-  if empty(selected_index) || selected_index < 1 || selected_index > len(g:prompt_template)
+  if empty(selected_index) || selected_index < 1 || selected_index > len(s:prompt_template)
       echo "\nInvalid selection!"
     return
   endif
-  let selected_title = g:prompt_template[selected_index - 1]['title']
-  let selected_content = g:prompt_template[selected_index - 1]['content']
+  let selected_title = s:prompt_template[selected_index - 1]['title']
+  let selected_content = s:prompt_template[selected_index - 1]['content']
   call GptNvimSelectTemplate(selected_title, selected_content)
 endfunction
 function! GptNvimSelectTemplate(selected_title, selected_content)
@@ -195,7 +195,6 @@ function! GptNvimSelectTemplate(selected_title, selected_content)
 python3 << EOF
 selected_content = vim.eval('a:selected_content')
 selected_content = selected_content.replace('\\n', '\n')
-vim.command(f"echo '{selected_content}'")
 vim_set_prompt_template('GPT_NVIM_CHAT_WINDOW', selected_content)
 EOF
 endfunction
