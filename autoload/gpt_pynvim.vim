@@ -40,7 +40,7 @@ function! s:InitGptPynvim()
   vnoremap <buffer> <C-t> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateTo()<CR>
   vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
   nnoremap <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChat()<CR>
-  nnoremap <C-p> :<C-u>call g:gpt_pynvim#GptNvimShowTemplateList()<CR>
+  nnoremap <C-t> :<C-u>call g:gpt_pynvim#GptNvimShowTemplateList()<CR>
 endfunction
 
 
@@ -195,7 +195,7 @@ function! GptNvimSelectTemplate(selected_title, selected_content)
 python3 << EOF
 selected_content = vim.eval('a:selected_content')
 selected_content = selected_content.replace('\\n', '\n')
-vim_set_prompt_template('GPT_NVIM_CHAT_WINDOW', selected_content)
+vim_set_prompt_template(GPT_NVIM_CHAT_WINDOW, selected_content)
 EOF
 endfunction
 command! GptNvimShowTemplates :call g:gpt_pynvim#GptNvimShowTemplateList()
