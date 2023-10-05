@@ -232,4 +232,4 @@ def vim_set_prompt_template(window_name: str, prompt_template):
     if not prompt_template:
         vim.command('echo "Error: Empty prompt template."')
         return
-    unsafe_update_window_buffer(window_name, f"{prompt_template}", "w")
+    unsafe_update_window_buffer(window_name, f"{prompt_template}", "a")
