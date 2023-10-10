@@ -43,7 +43,6 @@ autocmd VimEnter,BufWinEnter * call s:InitGptPynvim()
 function! s:InitGptPynvim()
   vnoremap <buffer> . :<C-u>call g:gpt_pynvim#GptNvimCodeReview()<CR>
   vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
-  vnoremap <buffer> <C-e> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateToEnglish()<CR>
   vnoremap <buffer> <C-t> :<C-u>call g:gpt_pynvim#GptNvimChatTranlateTo()<CR>
   vnoremap <buffer> <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChatInsertSelectedLines()<CR>
   nnoremap <C-Enter> :<C-u>call g:gpt_pynvim#GptNvimChat()<CR>
@@ -91,13 +90,6 @@ endfunction
 function! g:gpt_pynvim#GptNvimChat()
   python3 << EOF
 vim_chat(GPT_NVIM_CHAT_WINDOW)
-EOF
-endfunction
-
-
-function! g:gpt_pynvim#GptNvimChatTranlateToEnglish()
-  python3 << EOF
-vim_chat_translate_to(GPT_NVIM_CHAT_WINDOW, "English")
 EOF
 endfunction
 

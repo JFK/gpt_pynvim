@@ -81,7 +81,6 @@ export OPENAI_API_KEY="your_openai_api_key_here"
 | `.` (in visual mode)      | Ask for a code review.                                     |
 | `Ctrl+Enter`                | Open CptNvimChat and GptNvimChatSend.               |
 | `Visual mode + Ctrl+t`   | While Visual mode, translate selected text.               |
-| `Visual mode + Ctrl+e`  | While Visual mode, translate selected text to English.   |
 | `Ctrl+t`               | Show selections of prompt templates.   |
 | `:GptNvimChatHistory`  | Check history of questions and answers.                    |
 | `:GptNvimChatClearHistory` | Clear history of questions and answers.                 |

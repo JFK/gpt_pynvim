@@ -1,4 +1,10 @@
-- title: Make it more smart and natural
+- title: Translate to English
+  content: |
+    Translate the following sentence to English.
+    ```sentence
+    <Insert sentence here>
+    ```
+- title: Make it more smart and natural.
   content: |
     Make it more smart and natural
     ```it
