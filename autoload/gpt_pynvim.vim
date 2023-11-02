@@ -18,10 +18,18 @@ let s:parent_dir = fnamemodify(s:plugin_root_dir, ':h')
 
 function! s:CheckPythonDependencies()
   python3 << EOF
-import pkg_resources
+try:
+    from importlib.metadata import version, distributions # Python 3.8+
+except ImportError:
+    from importlib_metadata import version, distributions
+
 def check_dependencies():
     required_packages = {'pynvim': '0.4.3', 'openai': '0.28.0', 'requests': '2.25.1', 'tiktoken': '0.5.1', 'markdownify': '0.11.6', 'bs4': '0.0.1'}
-    installed_packages = {pkg.key: pkg.version for pkg in pkg_resources.working_set}
+    
+    installed_packages = {}
+    for dist in distributions():
+        installed_packages[dist.metadata['Name']] = dist.version
+
     missing_packages = {
         pkg: version for pkg, version in required_packages.items()
         if pkg not in installed_packages or installed_packages[pkg] < version
